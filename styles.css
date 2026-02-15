@@ -822,6 +822,146 @@ img {
 }
 
 /* ============================================
+   TECHNIQUES SECTION
+   ============================================ */
+
+.techniques {
+  padding: 140px 0;
+  background: var(--rose-light);
+}
+
+.techniques-header {
+  margin-bottom: 80px;
+}
+
+.techniques-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  align-items: stretch;
+}
+
+.technique-card {
+  padding: 48px 36px;
+  background: var(--white);
+  border: 1px solid var(--rose);
+  transition: all 0.4s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.technique-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.4s var(--ease-smooth);
+}
+
+.technique-card:hover::before {
+  transform: scaleX(1);
+}
+
+.technique-card:hover {
+  border-color: var(--burgundy);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(196, 161, 147, 0.12);
+}
+
+.technique-card--featured {
+  border-color: var(--burgundy);
+  background: var(--cream);
+}
+
+.technique-card--featured::before {
+  transform: scaleX(1);
+  background: var(--burgundy);
+}
+
+.technique-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--burgundy);
+  padding: 6px 14px;
+}
+
+.technique-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 28px;
+  color: var(--burgundy);
+}
+
+.technique-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.technique-title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.technique-aka {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 20px;
+}
+
+.technique-desc {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.technique-features {
+  list-style: none;
+  padding-top: 20px;
+  border-top: 1px solid var(--rose);
+}
+
+.technique-features li {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--charcoal);
+  padding: 8px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.technique-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 8px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* ============================================
    EXPERIENCE SECTION
    ============================================ */
 
@@ -1270,9 +1410,15 @@ img {
     gap: 32px;
   }
 
+  .techniques-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
   .story,
   .philosophy,
   .collections,
+  .techniques,
   .experience,
   .testimonials,
   .contact,
@@ -1544,6 +1690,57 @@ img {
 
   .big-quote cite {
     font-size: 0.7rem;
+  }
+
+  /* --- Techniques --- */
+  .techniques {
+    padding: 80px 0;
+  }
+
+  .techniques-header {
+    margin-bottom: 40px;
+  }
+
+  .techniques-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .technique-card {
+    padding: 32px 24px;
+  }
+
+  .technique-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+  }
+
+  .technique-title {
+    font-size: 1.4rem;
+  }
+
+  .technique-aka {
+    font-size: 0.65rem;
+    margin-bottom: 14px;
+  }
+
+  .technique-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .technique-features li {
+    font-size: 0.75rem;
+    padding: 6px 0 6px 18px;
+  }
+
+  .technique-badge {
+    top: 12px;
+    right: 12px;
+    font-size: 0.55rem;
+    padding: 5px 10px;
   }
 
   /* --- Collections --- */
@@ -1844,11 +2041,20 @@ img {
   .story,
   .philosophy,
   .collections,
+  .techniques,
   .experience,
   .testimonials,
   .contact,
   .cta-section {
     padding: 64px 0;
+  }
+
+  .technique-card {
+    padding: 24px 20px;
+  }
+
+  .technique-title {
+    font-size: 1.25rem;
   }
 
   .story-stats {
@@ -1948,6 +2154,11 @@ img {
 
   .collection-card:hover {
     transform: none;
+  }
+
+  .technique-card:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   .testimonial-card:hover {
