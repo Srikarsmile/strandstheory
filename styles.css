@@ -961,6 +961,149 @@ img {
   background: var(--gold);
 }
 
+/* Technique Pricing */
+.technique-pricing {
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rose);
+  border-bottom: 1px solid var(--rose);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.price-row span:first-child {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+}
+
+.price-row span:last-child {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--black);
+}
+
+/* Services Extras */
+.services-extras {
+  margin-top: 80px;
+  padding-top: 60px;
+  border-top: 1px solid var(--rose);
+}
+
+.services-extras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  text-align: center;
+}
+
+.service-extra h4 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.service-extra p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.service-extra-price {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--burgundy);
+}
+
+/* ============================================
+   TREATMENT SECTION
+   ============================================ */
+
+.treatment {
+  padding: 140px 0;
+}
+
+.treatment-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.treatment-text {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #8B7D72;
+  margin-bottom: 24px;
+  line-height: 1.9;
+}
+
+.treatment-text em {
+  font-style: italic;
+  color: var(--burgundy);
+}
+
+.treatment-highlights {
+  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.treatment-highlight {
+  padding-left: 24px;
+  border-left: 2px solid var(--gold);
+}
+
+.treatment-highlight h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+.treatment-highlight p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+.treatment-visual {
+  position: relative;
+}
+
+.treatment-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 2px;
+}
+
+.treatment-image-accent {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  z-index: -1;
+}
+
 /* ============================================
    EXPERIENCE SECTION
    ============================================ */
@@ -1390,7 +1533,8 @@ img {
 @media (max-width: 1024px) {
   .story-grid,
   .experience-grid,
-  .contact-grid {
+  .contact-grid,
+  .treatment-grid {
     grid-template-columns: 1fr;
     gap: 50px;
   }
@@ -1415,10 +1559,16 @@ img {
     gap: 24px;
   }
 
+  .services-extras-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
   .story,
   .philosophy,
   .collections,
   .techniques,
+  .treatment,
   .experience,
   .testimonials,
   .contact,
@@ -1428,6 +1578,19 @@ img {
 
   .story-visual {
     order: -1;
+  }
+
+  .treatment-visual {
+    order: -1;
+  }
+
+  .treatment-image {
+    aspect-ratio: 16/10;
+  }
+
+  .treatment-image-accent {
+    top: -12px;
+    right: -12px;
   }
 
   .story-image {
@@ -1743,6 +1906,65 @@ img {
     padding: 5px 10px;
   }
 
+  .price-row span:last-child {
+    font-size: 0.9rem;
+  }
+
+  .services-extras {
+    margin-top: 48px;
+    padding-top: 40px;
+  }
+
+  .services-extras-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .service-extra-price {
+    font-size: 1.3rem;
+  }
+
+  /* --- Treatment --- */
+  .treatment {
+    padding: 80px 0;
+  }
+
+  .treatment-grid {
+    gap: 40px;
+  }
+
+  .treatment-visual {
+    order: -1;
+  }
+
+  .treatment-image {
+    aspect-ratio: 16/10;
+  }
+
+  .treatment-image-accent {
+    top: -12px;
+    right: -12px;
+  }
+
+  .treatment-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .treatment-highlights {
+    margin: 28px 0;
+    gap: 18px;
+  }
+
+  .treatment-highlight h4 {
+    font-size: 1rem;
+  }
+
+  .treatment-highlight p {
+    font-size: 0.85rem;
+  }
+
   /* --- Collections --- */
   .collections {
     padding: 80px 0;
@@ -2042,6 +2264,7 @@ img {
   .philosophy,
   .collections,
   .techniques,
+  .treatment,
   .experience,
   .testimonials,
   .contact,
@@ -2055,6 +2278,18 @@ img {
 
   .technique-title {
     font-size: 1.25rem;
+  }
+
+  .treatment-highlight {
+    padding-left: 16px;
+  }
+
+  .treatment-highlight h4 {
+    font-size: 0.95rem;
+  }
+
+  .treatment-highlight p {
+    font-size: 0.8rem;
   }
 
   .story-stats {
