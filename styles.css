@@ -1,27 +1,28 @@
 /* ============================================
    STRANDS THEORY — Premium Hair Brand
-   Color Palette (Warm Earth Tones):
-   - Brown:     #7B5B4C (warm chocolate accent)
-   - Brown-dk:  #5C3D2E (deep espresso)
-   - Caramel:   #C4A882 (warm gold/caramel)
-   - Cream:     #FAF4EC (warm ivory)
-   - Blush:     #E6D2C6 (dusty rose)
-   - Taupe:     #3D2B1F (warm dark)
-   - Deep:      #2A1E14 (deepest brown)
+   Color Palette (Light, Airy & Feminine):
+   - Dusty Rose: #C4A193 (soft feminine accent)
+   - Rose-dk:    #B08E80 (deeper rose for hover)
+   - Caramel:    #C4A882 (warm gold — kept)
+   - Cream:      #FDFAF7 (bright warm white)
+   - Blush:      #F2E4DC (soft blush)
+   - Blush-lt:   #F8F0EB (barely-there blush)
+   - Taupe:      #6B5B50 (warm medium for text)
+   - Warm Dark:  #4A3D34 (soft dark, not gritty)
    ============================================ */
 
 :root {
-  --burgundy: #7B5B4C;
-  --burgundy-dark: #5C3D2E;
+  --burgundy: #C4A193;
+  --burgundy-dark: #B08E80;
   --gold: #C4A882;
   --gold-light: #D4C4A8;
-  --cream: #FAF4EC;
-  --rose: #E6D2C6;
-  --rose-light: #F0E4DC;
-  --charcoal: #3D2B1F;
-  --black: #2A1E14;
-  --white: #FFFCF8;
-  --gray: #9C8B7E;
+  --cream: #FDFAF7;
+  --rose: #F2E4DC;
+  --rose-light: #F8F0EB;
+  --charcoal: #6B5B50;
+  --black: #4A3D34;
+  --white: #FFFDFB;
+  --gray: #B3A599;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'DM Sans', 'Helvetica Neue', sans-serif;
   --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -79,7 +80,7 @@ img {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: var(--black);
+  background: var(--cream);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,7 +101,7 @@ img {
   font-family: var(--font-serif);
   font-size: 2rem;
   font-weight: 500;
-  color: var(--gold);
+  color: var(--burgundy);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   display: block;
@@ -111,7 +112,7 @@ img {
 .preloader-line {
   width: 60px;
   height: 1px;
-  background: var(--gold);
+  background: var(--burgundy);
   margin: 0 auto;
   animation: expandLine 1.2s var(--ease-out) 0.3s forwards;
   transform: scaleX(0);
@@ -142,7 +143,7 @@ img {
 }
 
 .nav.scrolled {
-  background: rgba(42, 30, 20, 0.95);
+  background: rgba(74, 61, 52, 0.95);
   backdrop-filter: blur(20px);
   padding: 14px 0;
   box-shadow: 0 1px 0 rgba(196, 168, 130, 0.1);
@@ -205,7 +206,7 @@ img {
 }
 
 .nav-cta {
-  background: var(--burgundy) !important;
+  background: var(--charcoal) !important;
   color: var(--white) !important;
   opacity: 1 !important;
   padding: 10px 24px;
@@ -220,7 +221,7 @@ img {
 }
 
 .nav-cta:hover {
-  background: var(--burgundy-dark) !important;
+  background: var(--black) !important;
 }
 
 /* Mobile Toggle */
@@ -273,14 +274,14 @@ img {
 }
 
 .btn-primary {
-  background: var(--burgundy);
+  background: var(--charcoal);
   color: var(--white);
 }
 
 .btn-primary:hover {
-  background: var(--burgundy-dark);
+  background: var(--black);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(123, 91, 76, 0.3);
+  box-shadow: 0 10px 30px rgba(74, 61, 52, 0.25);
 }
 
 .btn-ghost {
@@ -290,8 +291,8 @@ img {
 }
 
 .btn-ghost:hover {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--white);
+  color: var(--white);
   transform: translateY(-2px);
 }
 
@@ -321,7 +322,7 @@ img {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #2A1E14 0%, #3D2B1F 30%, #7B5B4C 70%, #2A1E14 100%);
+  background: linear-gradient(135deg, #4A3D34 0%, #6B5B50 30%, #C4A193 70%, #4A3D34 100%);
   background-size: 400% 400%;
   animation: heroGradient 12s ease infinite;
 }
@@ -335,7 +336,7 @@ img {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 0%, rgba(42, 30, 20, 0.4) 100%);
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(74, 61, 52, 0.4) 100%);
 }
 
 .hero-content {
@@ -430,11 +431,11 @@ img {
    ============================================ */
 
 .marquee {
-  background: var(--black);
+  background: var(--rose-light);
   padding: 18px 0;
   overflow: hidden;
-  border-top: 1px solid rgba(196, 168, 130, 0.15);
-  border-bottom: 1px solid rgba(196, 168, 130, 0.15);
+  border-top: 1px solid var(--rose);
+  border-bottom: 1px solid var(--rose);
 }
 
 .marquee-track {
@@ -450,8 +451,8 @@ img {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.6;
+  color: var(--burgundy);
+  opacity: 0.7;
 }
 
 @keyframes marquee {
@@ -566,7 +567,7 @@ img {
 .story-text {
   font-size: 1rem;
   font-weight: 300;
-  color: #7A6A5E;
+  color: #8B7D72;
   margin-bottom: 24px;
   line-height: 1.9;
 }
@@ -603,20 +604,20 @@ img {
 
 .philosophy {
   padding: 140px 0;
-  background: var(--black);
-  color: var(--white);
+  background: var(--rose-light);
+  color: var(--charcoal);
 }
 
 .philosophy .section-tag {
-  color: var(--gold);
+  color: var(--burgundy);
 }
 
 .philosophy .section-tag::before {
-  background: var(--gold);
+  background: var(--burgundy);
 }
 
 .philosophy .section-title {
-  color: var(--white);
+  color: var(--black);
 }
 
 .philosophy-header {
@@ -631,7 +632,8 @@ img {
 
 .philosophy-card {
   padding: 48px 36px;
-  border: 1px solid rgba(196, 168, 130, 0.15);
+  background: var(--white);
+  border: 1px solid var(--rose);
   transition: all 0.4s var(--ease-smooth);
   position: relative;
   overflow: hidden;
@@ -654,7 +656,7 @@ img {
 }
 
 .philosophy-card:hover {
-  border-color: rgba(196, 168, 130, 0.3);
+  border-color: var(--burgundy);
   transform: translateY(-4px);
 }
 
@@ -662,7 +664,7 @@ img {
   font-family: var(--font-serif);
   font-size: 3rem;
   font-weight: 600;
-  color: var(--gold);
+  color: var(--burgundy);
   opacity: 0.3;
   margin-bottom: 20px;
   line-height: 1;
@@ -673,13 +675,13 @@ img {
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 16px;
-  color: var(--cream);
+  color: var(--black);
 }
 
 .philosophy-card p {
   font-size: 0.9rem;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--gray);
   line-height: 1.8;
 }
 
@@ -764,7 +766,7 @@ img {
 .collection-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(42, 30, 20, 0);
+  background: rgba(74, 61, 52, 0);
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -773,7 +775,7 @@ img {
 }
 
 .collection-card:hover .collection-overlay {
-  background: rgba(42, 30, 20, 0.3);
+  background: rgba(74, 61, 52, 0.3);
 }
 
 .collection-explore {
@@ -843,7 +845,7 @@ img {
   display: flex;
   gap: 24px;
   padding: 28px 0;
-  border-bottom: 1px solid rgba(123, 91, 76, 0.1);
+  border-bottom: 1px solid rgba(196, 161, 147, 0.1);
 }
 
 .step-number {
@@ -867,7 +869,7 @@ img {
 .step-content p {
   font-size: 0.9rem;
   font-weight: 300;
-  color: #8B7B6E;
+  color: #9C8E83;
   line-height: 1.7;
 }
 
@@ -935,7 +937,7 @@ img {
 
 .testimonial-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(123, 91, 76, 0.08);
+  box-shadow: 0 20px 60px rgba(196, 161, 147, 0.08);
 }
 
 .testimonial-stars {
@@ -950,7 +952,7 @@ img {
   font-size: 1.05rem;
   font-weight: 400;
   font-style: italic;
-  color: #5C4A3E;
+  color: #7A6B60;
   line-height: 1.7;
   margin-bottom: 28px;
 }
@@ -996,7 +998,7 @@ img {
 .cta-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--black) 0%, #4A3528 50%, var(--burgundy) 100%);
+  background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose) 50%, var(--burgundy) 100%);
 }
 
 .cta-content {
@@ -1011,7 +1013,7 @@ img {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 500;
-  color: var(--white);
+  color: var(--black);
   line-height: 1.2;
   margin-bottom: 20px;
 }
@@ -1019,7 +1021,7 @@ img {
 .cta-desc {
   font-size: 1rem;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--charcoal);
   margin-bottom: 40px;
   line-height: 1.8;
 }
@@ -1042,7 +1044,7 @@ img {
 .contact-desc {
   font-size: 1rem;
   font-weight: 300;
-  color: #7A6A5E;
+  color: #8B7D72;
   margin-bottom: 40px;
   line-height: 1.8;
 }
@@ -1097,8 +1099,8 @@ img {
 }
 
 .social-link:hover {
-  background: var(--burgundy);
-  border-color: var(--burgundy);
+  background: var(--charcoal);
+  border-color: var(--charcoal);
   color: var(--white);
 }
 
@@ -1171,8 +1173,8 @@ img {
    ============================================ */
 
 .footer {
-  background: var(--black);
-  color: var(--white);
+  background: var(--rose-light);
+  color: var(--charcoal);
   padding: 80px 0 40px;
 }
 
@@ -1189,7 +1191,7 @@ img {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--burgundy);
   display: inline-block;
   margin-bottom: 12px;
 }
@@ -1197,7 +1199,7 @@ img {
 .footer-tagline {
   font-size: 0.9rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--gray);
   font-style: italic;
   font-family: var(--font-serif);
 }
@@ -1207,7 +1209,7 @@ img {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--burgundy);
   margin-bottom: 20px;
 }
 
@@ -1215,25 +1217,25 @@ img {
   display: block;
   font-size: 0.85rem;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--gray);
   margin-bottom: 10px;
   transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: var(--white);
+  color: var(--charcoal);
 }
 
 .footer-bottom {
   padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--rose);
   text-align: center;
 }
 
 .footer-bottom p {
   font-size: 0.75rem;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--gray);
   letter-spacing: 0.1em;
 }
 
@@ -1586,7 +1588,7 @@ img {
   }
 
   .collection-overlay {
-    background: rgba(42, 30, 20, 0.25);
+    background: rgba(74, 61, 52, 0.25);
   }
 
   /* --- Experience --- */
@@ -1937,7 +1939,7 @@ img {
   }
 
   .collection-overlay {
-    background: rgba(42, 30, 20, 0.2);
+    background: rgba(74, 61, 52, 0.2);
   }
 
   .philosophy-card:hover {
@@ -1964,7 +1966,7 @@ img {
 
   /* Active states for touch instead of hover */
   .btn-primary:active {
-    background: var(--burgundy-dark);
+    background: var(--black);
     transform: scale(0.97);
   }
 
@@ -1981,8 +1983,8 @@ img {
   }
 
   .social-link:active {
-    background: var(--burgundy);
-    border-color: var(--burgundy);
+    background: var(--charcoal);
+    border-color: var(--charcoal);
     color: var(--white);
   }
 }
