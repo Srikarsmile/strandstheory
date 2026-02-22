@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         onComplete: () => {
           preloader.style.visibility = 'hidden';
           preloader.style.pointerEvents = 'none';
+          // Recalculate scroll positions after preloader is gone
+          ScrollTrigger.refresh();
           // Trigger hero entrance after preloader
           heroEntrance();
         }
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     if (!preloader.classList.contains('hidden')) {
       preloader.classList.add('hidden');
+      ScrollTrigger.refresh();
       heroEntrance();
     }
   }, 3000);
@@ -128,13 +131,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── GSAP Scroll Reveal Animations ──
+  // Using explicit gsap.set() + gsap.to() pattern to avoid immediateRender issues
 
   // Section tags — slide in from left (skip sections with custom animations)
   gsap.utils.toArray('.section-tag').forEach(tag => {
     if (tag.closest('.story, .treatment, .experience')) return;
-    gsap.from(tag, {
-      x: -40,
-      opacity: 0,
+    gsap.set(tag, { x: -40, opacity: 0 });
+    gsap.to(tag, {
+      x: 0,
+      opacity: 1,
       duration: 0.8,
       ease: 'power3.out',
       scrollTrigger: {
@@ -148,9 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Section titles — reveal up (skip sections with custom animations)
   gsap.utils.toArray('.section-title').forEach(title => {
     if (title.closest('.story, .treatment, .experience')) return;
-    gsap.from(title, {
-      y: 60,
-      opacity: 0,
+    gsap.set(title, { y: 60, opacity: 0 });
+    gsap.to(title, {
+      y: 0,
+      opacity: 1,
       duration: 1,
       ease: 'power3.out',
       scrollTrigger: {
@@ -163,9 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Section subtitles
   gsap.utils.toArray('.section-subtitle').forEach(sub => {
-    gsap.from(sub, {
-      y: 30,
-      opacity: 0,
+    gsap.set(sub, { y: 30, opacity: 0 });
+    gsap.to(sub, {
+      y: 0,
+      opacity: 1,
       duration: 0.8,
       ease: 'power3.out',
       scrollTrigger: {
@@ -180,9 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const storyImage = document.querySelector('.story-visual');
   const storyContent = document.querySelector('.story-content');
   if (storyImage && storyContent) {
-    gsap.from(storyImage, {
-      x: -80,
-      opacity: 0,
+    gsap.set(storyImage, { x: -80, opacity: 0 });
+    gsap.to(storyImage, {
+      x: 0,
+      opacity: 1,
       duration: 1.2,
       ease: 'power3.out',
       scrollTrigger: {
@@ -196,6 +204,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const storyTexts = storyContent.querySelectorAll('.story-text');
     const storyStats = storyContent.querySelector('.story-stats');
 
+    // Set initial states
+    if (storyTag) gsap.set(storyTag, { x: -40, opacity: 0 });
+    if (storyTitle) gsap.set(storyTitle, { y: 40, opacity: 0 });
+    if (storyTexts.length) gsap.set(storyTexts, { y: 30, opacity: 0 });
+    if (storyStats) gsap.set(storyStats, { y: 30, opacity: 0 });
+
     const storyTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.story-grid',
@@ -204,34 +218,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (storyTag) {
-      storyTl.from(storyTag, {
-        x: -40,
-        opacity: 0,
+      storyTl.to(storyTag, {
+        x: 0,
+        opacity: 1,
         duration: 0.6,
         ease: 'power3.out',
       });
     }
     if (storyTitle) {
-      storyTl.from(storyTitle, {
-        y: 40,
-        opacity: 0,
+      storyTl.to(storyTitle, {
+        y: 0,
+        opacity: 1,
         duration: 0.8,
         ease: 'power3.out',
       }, '-=0.3');
     }
     if (storyTexts.length) {
-      storyTl.from(storyTexts, {
-        y: 30,
-        opacity: 0,
+      storyTl.to(storyTexts, {
+        y: 0,
+        opacity: 1,
         duration: 0.7,
         stagger: 0.12,
         ease: 'power3.out',
       }, '-=0.3');
     }
     if (storyStats) {
-      storyTl.from(storyStats, {
-        y: 30,
-        opacity: 0,
+      storyTl.to(storyStats, {
+        y: 0,
+        opacity: 1,
         duration: 0.7,
         ease: 'power3.out',
       }, '-=0.3');
@@ -254,9 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Philosophy cards — stagger in from bottom
   const philCards = gsap.utils.toArray('.philosophy-card');
   if (philCards.length) {
-    gsap.from(philCards, {
-      y: 80,
-      opacity: 0,
+    gsap.set(philCards, { y: 80, opacity: 0 });
+    gsap.to(philCards, {
+      y: 0,
+      opacity: 1,
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
@@ -270,9 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Quote section — scale and fade
   const bigQuote = document.querySelector('.big-quote');
   if (bigQuote) {
-    gsap.from(bigQuote, {
-      scale: 0.9,
-      opacity: 0,
+    gsap.set(bigQuote, { scale: 0.9, opacity: 0 });
+    gsap.to(bigQuote, {
+      scale: 1,
+      opacity: 1,
       duration: 1.2,
       ease: 'power3.out',
       scrollTrigger: {
@@ -285,9 +301,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Technique cards — stagger reveal
   const techCards = gsap.utils.toArray('.technique-card');
   if (techCards.length) {
-    gsap.from(techCards, {
-      y: 60,
-      opacity: 0,
+    gsap.set(techCards, { y: 60, opacity: 0 });
+    gsap.to(techCards, {
+      y: 0,
+      opacity: 1,
       duration: 0.8,
       stagger: 0.2,
       ease: 'power3.out',
@@ -301,9 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Services extras
   const serviceExtras = gsap.utils.toArray('.service-extra');
   if (serviceExtras.length) {
-    gsap.from(serviceExtras, {
-      y: 40,
-      opacity: 0,
+    gsap.set(serviceExtras, { y: 40, opacity: 0 });
+    gsap.to(serviceExtras, {
+      y: 0,
+      opacity: 1,
       duration: 0.6,
       stagger: 0.12,
       ease: 'power3.out',
@@ -322,6 +340,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const treatmentTitle = treatmentContent.querySelector('.section-title');
     const treatmentOther = treatmentContent.querySelectorAll('.treatment-text, .treatment-highlights, .btn');
 
+    // Set initial states
+    if (treatmentTag) gsap.set(treatmentTag, { x: -40, opacity: 0 });
+    if (treatmentTitle) gsap.set(treatmentTitle, { y: 40, opacity: 0 });
+    if (treatmentOther.length) gsap.set(treatmentOther, { y: 30, opacity: 0 });
+    gsap.set(treatmentVisual, { x: 80, opacity: 0 });
+
     const treatmentTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.treatment-grid',
@@ -330,34 +354,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (treatmentTag) {
-      treatmentTl.from(treatmentTag, {
-        x: -40,
-        opacity: 0,
+      treatmentTl.to(treatmentTag, {
+        x: 0,
+        opacity: 1,
         duration: 0.6,
         ease: 'power3.out',
       });
     }
     if (treatmentTitle) {
-      treatmentTl.from(treatmentTitle, {
-        y: 40,
-        opacity: 0,
+      treatmentTl.to(treatmentTitle, {
+        y: 0,
+        opacity: 1,
         duration: 0.8,
         ease: 'power3.out',
       }, '-=0.3');
     }
     if (treatmentOther.length) {
-      treatmentTl.from(treatmentOther, {
-        y: 30,
-        opacity: 0,
+      treatmentTl.to(treatmentOther, {
+        y: 0,
+        opacity: 1,
         duration: 0.7,
         stagger: 0.1,
         ease: 'power3.out',
       }, '-=0.2');
     }
 
-    gsap.from(treatmentVisual, {
-      x: 80,
-      opacity: 0,
+    gsap.to(treatmentVisual, {
+      x: 0,
+      opacity: 1,
       duration: 1.2,
       ease: 'power3.out',
       scrollTrigger: {
@@ -375,6 +399,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const expTitle = expContent.querySelector('.section-title');
     const expIntro = expContent.querySelector('.story-text');
 
+    // Set initial states
+    if (expTag) gsap.set(expTag, { x: -40, opacity: 0 });
+    if (expTitle) gsap.set(expTitle, { y: 40, opacity: 0 });
+    if (expIntro) gsap.set(expIntro, { y: 20, opacity: 0 });
+    if (expSteps.length) gsap.set(expSteps, { x: -40, opacity: 0 });
+
     const expTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.experience-content',
@@ -383,33 +413,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (expTag) {
-      expTl.from(expTag, {
-        x: -40,
-        opacity: 0,
+      expTl.to(expTag, {
+        x: 0,
+        opacity: 1,
         duration: 0.6,
         ease: 'power3.out',
       });
     }
     if (expTitle) {
-      expTl.from(expTitle, {
-        y: 40,
-        opacity: 0,
+      expTl.to(expTitle, {
+        y: 0,
+        opacity: 1,
         duration: 0.8,
         ease: 'power3.out',
       }, '-=0.3');
     }
     if (expIntro) {
-      expTl.from(expIntro, {
-        y: 20,
-        opacity: 0,
+      expTl.to(expIntro, {
+        y: 0,
+        opacity: 1,
         duration: 0.6,
         ease: 'power3.out',
       }, '-=0.3');
     }
     if (expSteps.length) {
-      expTl.from(expSteps, {
-        x: -40,
-        opacity: 0,
+      expTl.to(expSteps, {
+        x: 0,
+        opacity: 1,
         duration: 0.7,
         stagger: 0.2,
         ease: 'power3.out',
@@ -420,9 +450,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Testimonial cards — stagger from bottom
   const testimonialCards = gsap.utils.toArray('.testimonial-card');
   if (testimonialCards.length) {
-    gsap.from(testimonialCards, {
-      y: 60,
-      opacity: 0,
+    gsap.set(testimonialCards, { y: 60, opacity: 0 });
+    gsap.to(testimonialCards, {
+      y: 0,
+      opacity: 1,
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
@@ -436,9 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // CTA section
   const ctaContent = document.querySelector('.cta-content');
   if (ctaContent) {
-    gsap.from(ctaContent.children, {
-      y: 40,
-      opacity: 0,
+    gsap.set(ctaContent.children, { y: 40, opacity: 0 });
+    gsap.to(ctaContent.children, {
+      y: 0,
+      opacity: 1,
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
@@ -453,9 +485,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactInfo = document.querySelector('.contact-info');
   const contactForm = document.querySelector('.contact-form-wrapper');
   if (contactInfo && contactForm) {
-    gsap.from(contactInfo.children, {
-      y: 50,
-      opacity: 0,
+    gsap.set(contactInfo.children, { y: 50, opacity: 0 });
+    gsap.set(contactForm, { y: 60, opacity: 0 });
+
+    gsap.to(contactInfo.children, {
+      y: 0,
+      opacity: 1,
       duration: 0.7,
       stagger: 0.1,
       ease: 'power3.out',
@@ -465,9 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    gsap.from(contactForm, {
-      y: 60,
-      opacity: 0,
+    gsap.to(contactForm, {
+      y: 0,
+      opacity: 1,
       duration: 0.9,
       ease: 'power3.out',
       scrollTrigger: {
@@ -792,7 +827,5 @@ document.addEventListener('DOMContentLoaded', () => {
       onEnterBack: () => animate(),
     });
   }
-
-  // GSAP ScrollTrigger handles all reveal animations — no manual overrides needed
 
 });
