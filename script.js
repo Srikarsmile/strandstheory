@@ -1,36 +1,97 @@
 /* ============================================
-   STRANDS THEORY — Interactions & Animations
+   STRANDS THEORY — GSAP Animations & Canvas
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Register GSAP plugins
+  gsap.registerPlugin(ScrollTrigger);
+
   // ── Preloader ──
   const preloader = document.getElementById('preloader');
+  const preloaderTl = gsap.timeline();
+
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      preloader.classList.add('hidden');
-    }, 1800);
+    preloaderTl
+      .to(preloader, {
+        opacity: 0,
+        duration: 0.6,
+        delay: 1.8,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          preloader.style.visibility = 'hidden';
+          preloader.style.pointerEvents = 'none';
+          // Trigger hero entrance after preloader
+          heroEntrance();
+        }
+      });
   });
-  // Fallback in case load already fired
+
+  // Fallback
   setTimeout(() => {
-    preloader.classList.add('hidden');
-  }, 2500);
+    if (!preloader.classList.contains('hidden')) {
+      preloader.classList.add('hidden');
+      heroEntrance();
+    }
+  }, 3000);
+
+  // ── Hero Entrance Animation ──
+  let heroPlayed = false;
+
+  // Immediately hide hero elements so GSAP can animate them in
+  gsap.set('.hero-subtitle, .hero-line, .hero-desc, .hero-actions .btn, .hero-scroll', {
+    opacity: 0,
+    y: 30,
+  });
+
+  function heroEntrance() {
+    if (heroPlayed) return;
+    heroPlayed = true;
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl.to('.hero-subtitle', {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+    })
+      .to('.hero-line', {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.2,
+      }, '-=0.6')
+      .to('.hero-desc', {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+      }, '-=0.6')
+      .to('.hero-actions .btn', {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.15,
+      }, '-=0.4')
+      .to('.hero-scroll', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+      }, '-=0.2');
+  }
 
   // ── Navigation Scroll Effect ──
   const nav = document.getElementById('nav');
-  let lastScroll = 0;
 
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-
-    if (currentScroll > 80) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
+  ScrollTrigger.create({
+    start: 80,
+    onUpdate: (self) => {
+      if (self.scroll() > 80) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
     }
-
-    lastScroll = currentScroll;
-  }, { passive: true });
+  });
 
   // ── Mobile Navigation Toggle ──
   const navToggle = document.getElementById('navToggle');
@@ -42,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
   });
 
-  // Close mobile nav on link click
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navToggle.classList.remove('active');
@@ -67,71 +127,422 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Scroll Reveal Animation ──
-  const revealElements = document.querySelectorAll('.reveal');
+  // ── GSAP Scroll Reveal Animations ──
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        // Stagger the animation slightly for sibling elements
-        const delay = entry.target.dataset.delay || 0;
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, delay);
-        revealObserver.unobserve(entry.target);
+  // Section tags — slide in from left (skip sections with custom animations)
+  gsap.utils.toArray('.section-tag').forEach(tag => {
+    if (tag.closest('.story, .treatment, .experience')) return;
+    gsap.from(tag, {
+      x: -40,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: tag,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
       }
     });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -60px 0px'
   });
 
-  revealElements.forEach((el, index) => {
-    // Add stagger delay to elements within the same parent
-    const parent = el.parentElement;
-    const siblings = parent.querySelectorAll('.reveal');
-    const siblingIndex = Array.from(siblings).indexOf(el);
-    el.dataset.delay = siblingIndex * 100;
-
-    revealObserver.observe(el);
+  // Section titles — reveal up (skip sections with custom animations)
+  gsap.utils.toArray('.section-title').forEach(title => {
+    if (title.closest('.story, .treatment, .experience')) return;
+    gsap.from(title, {
+      y: 60,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: title,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      }
+    });
   });
 
-  // ── Contact Form Handling ──
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+  // Section subtitles
+  gsap.utils.toArray('.section-subtitle').forEach(sub => {
+    gsap.from(sub, {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: sub,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      }
+    });
+  });
 
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
+  // Story section — proper timeline: tag, title, text, stats + image
+  const storyImage = document.querySelector('.story-visual');
+  const storyContent = document.querySelector('.story-content');
+  if (storyImage && storyContent) {
+    gsap.from(storyImage, {
+      x: -80,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.story-grid',
+        start: 'top 75%',
+      }
+    });
 
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
+    const storyTag = storyContent.querySelector('.section-tag');
+    const storyTitle = storyContent.querySelector('.section-title');
+    const storyTexts = storyContent.querySelectorAll('.story-text');
+    const storyStats = storyContent.querySelector('.story-stats');
 
-      // Simulate form submission
-      setTimeout(() => {
-        btn.textContent = 'Message Sent!';
-        btn.style.background = '#2D6B45';
+    const storyTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.story-grid',
+        start: 'top 75%',
+      }
+    });
 
-        setTimeout(() => {
-          btn.textContent = originalText;
-          btn.style.background = '';
-          btn.disabled = false;
-          contactForm.reset();
-        }, 2500);
-      }, 1200);
+    if (storyTag) {
+      storyTl.from(storyTag, {
+        x: -40,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      });
+    }
+    if (storyTitle) {
+      storyTl.from(storyTitle, {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+    if (storyTexts.length) {
+      storyTl.from(storyTexts, {
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+    if (storyStats) {
+      storyTl.from(storyStats, {
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+  }
+
+  // Story image accent — subtle float
+  const storyAccent = document.querySelector('.story-image-accent');
+  if (storyAccent) {
+    gsap.to(storyAccent, {
+      y: -10,
+      x: 5,
+      duration: 3,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
     });
   }
 
-  // ── Parallax-like effect on hero ──
+  // Philosophy cards — stagger in from bottom
+  const philCards = gsap.utils.toArray('.philosophy-card');
+  if (philCards.length) {
+    gsap.from(philCards, {
+      y: 80,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.philosophy-grid',
+        start: 'top 80%',
+      }
+    });
+  }
+
+  // Quote section — scale and fade
+  const bigQuote = document.querySelector('.big-quote');
+  if (bigQuote) {
+    gsap.from(bigQuote, {
+      scale: 0.9,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.quote-section',
+        start: 'top 75%',
+      }
+    });
+  }
+
+  // Technique cards — stagger reveal
+  const techCards = gsap.utils.toArray('.technique-card');
+  if (techCards.length) {
+    gsap.from(techCards, {
+      y: 60,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.techniques-grid',
+        start: 'top 80%',
+      }
+    });
+  }
+
+  // Services extras
+  const serviceExtras = gsap.utils.toArray('.service-extra');
+  if (serviceExtras.length) {
+    gsap.from(serviceExtras, {
+      y: 40,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.services-extras',
+        start: 'top 85%',
+      }
+    });
+  }
+
+  // Treatment section — sequential: tag, title, then content
+  const treatmentContent = document.querySelector('.treatment-content');
+  const treatmentVisual = document.querySelector('.treatment-visual');
+  if (treatmentContent && treatmentVisual) {
+    const treatmentTag = treatmentContent.querySelector('.section-tag');
+    const treatmentTitle = treatmentContent.querySelector('.section-title');
+    const treatmentOther = treatmentContent.querySelectorAll('.treatment-text, .treatment-highlights, .btn');
+
+    const treatmentTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.treatment-grid',
+        start: 'top 75%',
+      }
+    });
+
+    if (treatmentTag) {
+      treatmentTl.from(treatmentTag, {
+        x: -40,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      });
+    }
+    if (treatmentTitle) {
+      treatmentTl.from(treatmentTitle, {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+    if (treatmentOther.length) {
+      treatmentTl.from(treatmentOther, {
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power3.out',
+      }, '-=0.2');
+    }
+
+    gsap.from(treatmentVisual, {
+      x: 80,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.treatment-grid',
+        start: 'top 75%',
+      }
+    });
+  }
+
+  // Experience section — proper timeline: tag, title, intro, steps
+  const expContent = document.querySelector('.experience-content');
+  const expSteps = gsap.utils.toArray('.experience-step');
+  if (expContent) {
+    const expTag = expContent.querySelector('.section-tag');
+    const expTitle = expContent.querySelector('.section-title');
+    const expIntro = expContent.querySelector('.story-text');
+
+    const expTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.experience-content',
+        start: 'top 80%',
+      }
+    });
+
+    if (expTag) {
+      expTl.from(expTag, {
+        x: -40,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      });
+    }
+    if (expTitle) {
+      expTl.from(expTitle, {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+    if (expIntro) {
+      expTl.from(expIntro, {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+    if (expSteps.length) {
+      expTl.from(expSteps, {
+        x: -40,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.2,
+        ease: 'power3.out',
+      }, '-=0.3');
+    }
+  }
+
+  // Testimonial cards — stagger from bottom
+  const testimonialCards = gsap.utils.toArray('.testimonial-card');
+  if (testimonialCards.length) {
+    gsap.from(testimonialCards, {
+      y: 60,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.testimonials-grid',
+        start: 'top 80%',
+      }
+    });
+  }
+
+  // CTA section
+  const ctaContent = document.querySelector('.cta-content');
+  if (ctaContent) {
+    gsap.from(ctaContent.children, {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.cta-section',
+        start: 'top 80%',
+      }
+    });
+  }
+
+  // Contact section
+  const contactInfo = document.querySelector('.contact-info');
+  const contactForm = document.querySelector('.contact-form-wrapper');
+  if (contactInfo && contactForm) {
+    gsap.from(contactInfo.children, {
+      y: 50,
+      opacity: 0,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.contact-grid',
+        start: 'top 80%',
+      }
+    });
+
+    gsap.from(contactForm, {
+      y: 60,
+      opacity: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.contact-grid',
+        start: 'top 75%',
+      }
+    });
+  }
+
+  // Stat numbers — count up animation
+  gsap.utils.toArray('.stat-number').forEach(stat => {
+    const text = stat.textContent;
+    const match = text.match(/(\d+)/);
+    if (match) {
+      const target = parseInt(match[1]);
+      const suffix = text.replace(match[1], '');
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: stat,
+          start: 'top 90%',
+        },
+        onUpdate: () => {
+          stat.textContent = Math.round(obj.val) + suffix;
+        }
+      });
+    }
+  });
+
+  // ── Parallax effects ──
   const heroBg = document.querySelector('.hero-bg');
   if (heroBg) {
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY;
-      if (scrolled < window.innerHeight) {
-        heroBg.style.transform = `scale(${1 + scrolled * 0.0003}) translateY(${scrolled * 0.3}px)`;
+    gsap.to(heroBg, {
+      scale: 1.15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
       }
-    }, { passive: true });
+    });
+  }
+
+  // Parallax on quote section bg
+  const quoteBg = document.querySelector('.quote-bg');
+  if (quoteBg) {
+    gsap.to(quoteBg, {
+      yPercent: -15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.quote-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+  }
+
+  // Marquee speed boost on scroll
+  const marqueeTrack = document.querySelector('.marquee-track');
+  if (marqueeTrack) {
+    gsap.to(marqueeTrack, {
+      x: -100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.marquee',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.5,
+      }
+    });
   }
 
   // ── Active nav link highlighting ──
@@ -157,19 +568,238 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { passive: true });
 
-  // ── Cursor custom effect on collection cards ──
-  const collectionCards = document.querySelectorAll('.collection-card');
-  collectionCards.forEach(card => {
+  // ── Contact Form Handling ──
+  const contactFormEl = document.getElementById('contactForm');
+  if (contactFormEl) {
+    contactFormEl.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const btn = contactFormEl.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.textContent = 'Message Sent!';
+        btn.style.background = '#2D6B45';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.disabled = false;
+          contactFormEl.reset();
+        }, 2500);
+      }, 1200);
+    });
+  }
+
+  // ── Technique Card Tilt Effect ──
+  const techCardEls = document.querySelectorAll('.technique-card');
+  techCardEls.forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
-      card.style.transform = `translateY(-6px) perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
+      gsap.to(card, {
+        rotateY: x,
+        rotateX: -y,
+        transformPerspective: 1000,
+        duration: 0.4,
+        ease: 'power2.out',
+      });
     });
 
     card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
+      gsap.to(card, {
+        rotateY: 0,
+        rotateX: 0,
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.5)',
+      });
     });
+  });
+
+  // ══════════════════════════════════════════════
+  // HERO CANVAS — Flowing Strand Particles
+  // ══════════════════════════════════════════════
+
+  const canvas = document.getElementById('heroCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let animationId;
+    let strands = [];
+    let particles = [];
+    let width, height;
+
+    function resizeCanvas() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Strand class — flowing hair-like curves
+    class Strand {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.length = 80 + Math.random() * 160;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.6;
+        this.curve = (Math.random() - 0.5) * 0.02;
+        this.opacity = 0.05 + Math.random() * 0.15;
+        this.thickness = 0.5 + Math.random() * 1.5;
+        this.segments = 6 + Math.floor(Math.random() * 6);
+        this.wave = Math.random() * Math.PI * 2;
+        this.waveSpeed = 0.005 + Math.random() * 0.015;
+        this.waveAmp = 10 + Math.random() * 30;
+        // Gold-ish palette
+        const colors = [
+          `rgba(196, 168, 130,`,  // gold
+          `rgba(196, 161, 147,`,  // dusty rose
+          `rgba(212, 196, 168,`,  // gold-light
+          `rgba(255, 253, 251,`,  // white
+          `rgba(176, 142, 128,`,  // rose-dk
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      update() {
+        this.y -= this.speed;
+        this.wave += this.waveSpeed;
+
+        if (this.y + this.length < 0) {
+          this.reset();
+          this.y = height + this.length;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        const segLen = this.length / this.segments;
+
+        let startX = this.x + Math.sin(this.wave) * this.waveAmp;
+        let startY = this.y;
+
+        ctx.moveTo(startX, startY);
+
+        for (let i = 1; i <= this.segments; i++) {
+          const t = i / this.segments;
+          const px = this.x + Math.sin(this.wave + t * 3) * this.waveAmp * (1 - t * 0.3);
+          const py = this.y - segLen * i;
+          const cpx = px + Math.sin(this.wave + t * 2) * this.waveAmp * 0.5;
+          const cpy = py + segLen * 0.5;
+
+          ctx.quadraticCurveTo(cpx, cpy, px, py);
+        }
+
+        ctx.strokeStyle = this.color + (this.opacity * (1 - Math.abs(this.y / height - 0.5) * 0.5)) + ')';
+        ctx.lineWidth = this.thickness;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+    }
+
+    // Floating particle class — tiny shimmering dots
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = 0.5 + Math.random() * 2;
+        this.speedY = -0.1 - Math.random() * 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.opacity = 0;
+        this.maxOpacity = 0.1 + Math.random() * 0.3;
+        this.fadeIn = true;
+        this.life = 200 + Math.random() * 400;
+        this.age = 0;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.age++;
+
+        if (this.fadeIn && this.opacity < this.maxOpacity) {
+          this.opacity += 0.005;
+        }
+
+        if (this.age > this.life * 0.7) {
+          this.opacity -= 0.003;
+        }
+
+        if (this.age > this.life || this.y < -10 || this.x < -10 || this.x > width + 10) {
+          this.reset();
+          this.y = height + 10;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212, 196, 168, ${Math.max(0, this.opacity)})`;
+        ctx.fill();
+      }
+    }
+
+    // Initialize
+    const strandCount = Math.min(25, Math.floor(width / 50));
+    const particleCount = Math.min(40, Math.floor(width / 30));
+
+    for (let i = 0; i < strandCount; i++) {
+      strands.push(new Strand());
+    }
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw strands
+      strands.forEach(strand => {
+        strand.update();
+        strand.draw();
+      });
+
+      // Draw particles
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      animationId = requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Pause canvas animation when hero is not visible for performance
+    ScrollTrigger.create({
+      trigger: '.hero',
+      start: 'top bottom',
+      end: 'bottom top',
+      onLeave: () => cancelAnimationFrame(animationId),
+      onEnterBack: () => animate(),
+    });
+  }
+
+  // ── Remove .reveal class visibility handling (GSAP handles it now) ──
+  // Make non-hero reveal elements visible since GSAP scroll triggers control their animations
+  document.querySelectorAll('.reveal').forEach(el => {
+    // Skip hero elements — they are handled by heroEntrance()
+    if (el.closest('.hero')) return;
+    el.style.opacity = '1';
+    el.style.transform = 'none';
   });
 
 });

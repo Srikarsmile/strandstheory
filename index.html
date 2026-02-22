@@ -48,6 +48,7 @@
   <!-- Hero -->
   <header class="hero" id="hero">
     <div class="hero-bg"></div>
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-subtitle reveal">Rooted in Us</p>
@@ -99,11 +100,12 @@
         </div>
         <div class="story-content">
           <span class="section-tag reveal">Our Story</span>
-          <h2 class="section-title reveal">Built for Women Who've Always Deserved More</h2>
+          <h2 class="section-title reveal">Built for Women Who Deserve More</h2>
           <p class="story-text reveal">
-            Strands Theory was born from a gap we lived every day — as women of colour,
-            we knew the struggle of walking into salons that didn't understand our texture,
-            our needs, or our vision. We created the space we wished had always existed.
+            Strands Theory was founded from lived experiences — understanding the frustration
+            of walking into spaces that lacked expertise in textured bond placements.
+            We created a private, consultation-led environment where knowledge, discretion
+            and technical precision are non-negotiable.
           </p>
           <p class="story-text reveal">
             Whether you're rocking your natural texture, protecting your hair while switching
@@ -144,21 +146,23 @@
       <div class="philosophy-grid">
         <div class="philosophy-card reveal">
           <div class="philosophy-card-number">01</div>
-          <h3 class="philosophy-card-title">We Understand Your Hair</h3>
-          <p>From 3A curls to 4C coils, we know textured hair inside out. Our techniques
-            are chosen to work with your natural hair — protecting it, not fighting it.</p>
+          <h3 class="philosophy-card-title">Precision for Textured Hair</h3>
+          <p>Textured hair requires specialist knowledge — not assumption. Our bond techniques are selected to integrate
+            seamlessly while preserving density, movement and long-term hair health.</p>
+          <p>Protection is not optional. It is the standard.</p>
         </div>
         <div class="philosophy-card reveal">
           <div class="philosophy-card-number">02</div>
-          <h3 class="philosophy-card-title">Versatility Is Freedom</h3>
-          <p>Straight today, curly tomorrow. Protective style this month, big chop the next.
-            Your hair should move with your mood, your moment, your magic — never hold you back.</p>
+          <h3 class="philosophy-card-title">Structure Creates Freedom</h3>
+          <p>Straight today. Curled tomorrow. Boardroom polished or softly updone. Your extensions are placed to move
+            with you — professionally, socially, effortlessly.</p>
+          <p>Refinement should never feel restrictive.</p>
         </div>
         <div class="philosophy-card reveal">
           <div class="philosophy-card-number">03</div>
-          <h3 class="philosophy-card-title">Premium, Always</h3>
-          <p>We source only the finest quality hair — ethically and with care. Colour-matched
-            to blend seamlessly with deeper tones, because your extensions should look like they're truly yours.</p>
+          <h3 class="philosophy-card-title">Sourced with Intention</h3>
+          <p>Only ethically sourced, premium hair is selected for Strands Theory. Every bundle is density-matched and
+            custom colour blended to integrate seamlessly with deeper tones — ensuring movement and longevity.</p>
         </div>
       </div>
     </div>
@@ -179,11 +183,11 @@
   <section class="techniques" id="techniques">
     <div class="container">
       <div class="techniques-header">
-        <span class="section-tag reveal">Our Techniques</span>
-        <h2 class="section-title section-title--center reveal">Three Signature Methods</h2>
+        <span class="section-tag reveal">The Method</span>
+        <h2 class="section-title section-title--center reveal">The Method</h2>
         <p class="section-subtitle reveal">
-          Every head of hair is unique. That's why we offer three precision installation techniques —
-          each designed for different hair types, lifestyles, and looks. All prices include hair and installation.
+          Hair density, curl pattern, lifestyle and long-term goals are assessed during consultation
+          to determine the most suitable technique. All investments include premium hair and professional installation.
         </p>
       </div>
       <div class="techniques-grid">
@@ -201,11 +205,14 @@
             </svg>
           </div>
           <h3 class="technique-title">K Tips</h3>
-          <span class="technique-aka">Keratin Tip Extensions</span>
+          <span class="technique-aka">Keratin Bond Extensions</span>
           <p class="technique-desc">
-            The gold standard for textured hair. Pre-bonded keratin tips are fused to your natural
-            hair using gentle heat, creating a strong, long-lasting bond that moves and flows naturally
-            for months — perfect for achieving length while keeping your hair protected.
+            The signature technique. Pre-bonded keratin tips are fused using controlled heat to create
+            a discreet, long-wearing bond that mirrors the natural movement of textured hair.
+          </p>
+          <p class="technique-desc">
+            Structured for longevity. Balanced for protection. Designed for women seeking refined
+            length or volume without compromise.
           </p>
           <div class="technique-pricing">
             <div class="price-row"><span>14"</span><span>&pound;760</span></div>
@@ -231,11 +238,14 @@
             </svg>
           </div>
           <h3 class="technique-title">I Tips</h3>
-          <span class="technique-aka">Micro-Bead Extensions</span>
+          <span class="technique-aka">Micro Bead Method</span>
           <p class="technique-desc">
-            No heat, no glue — just tiny micro-beads that clamp individual strands into place.
-            The gentlest method available, ideal for natural hair that needs extra care. Easy
-            to maintain, reposition, and kind to delicate edges.
+            Installed without heat or adhesive, individual strands are secured using micro-links
+            for a flexible, low-tension alternative. This method allows for easy maintenance and
+            repositioning while remaining mindful of delicate areas such as the hairline.
+          </p>
+          <p class="technique-desc">
+            Adaptable. Lightweight. Considered.
           </p>
           <div class="technique-pricing">
             <div class="price-row"><span>14"</span><span>&pound;720</span></div>
@@ -262,11 +272,10 @@
             </svg>
           </div>
           <h3 class="technique-title">F Tips</h3>
-          <span class="technique-aka">Flat Tip Extensions</span>
+          <span class="technique-aka">Flat Bond Method</span>
           <p class="technique-desc">
-            Ultra-flat bonds that sit flush against the scalp for a completely invisible finish.
-            Lightweight and comfortable — undetectable in updos, high ponytails, and sleek
-            pulled-back styles. Great for achieving versatile looks.
+            No heat, ultra-flat bonds sit flush against the scalp to create an exceptionally discreet
+            finish. Lightweight and comfortable, this method is suited for fine hair.
           </p>
           <div class="technique-pricing">
             <div class="price-row"><span>14"</span><span>&pound;720</span></div>
@@ -286,11 +295,7 @@
       <!-- Additional Services -->
       <div class="services-extras reveal">
         <div class="services-extras-grid">
-          <div class="service-extra">
-            <h4>K Tip Removal</h4>
-            <p>Including wash and blow dry</p>
-            <span class="service-extra-price">&pound;90</span>
-          </div>
+
           <div class="service-extra">
             <h4>Maintenance</h4>
             <p>K Tip / I Tip / F Tip — approx. 3hrs 30mins</p>
@@ -360,35 +365,16 @@
         <div class="experience-content">
           <span class="section-tag reveal">The Experience</span>
           <h2 class="section-title reveal">From Consultation to Confidence</h2>
+          <p class="story-text reveal">Every appointment begins with an assessment.</p>
           <div class="experience-steps">
             <div class="experience-step reveal">
               <div class="step-number">01</div>
               <div class="step-content">
                 <h4>Consultation</h4>
-                <p>We listen to your vision, assess your hair texture and needs, and craft a personalised plan just for
-                  you.</p>
-              </div>
-            </div>
-            <div class="experience-step reveal">
-              <div class="step-number">02</div>
-              <div class="step-content">
-                <h4>Selection</h4>
-                <p>Hand-pick your perfect match — texture, length, and colour blended to complement your natural hair
-                  and skin tone.</p>
-              </div>
-            </div>
-            <div class="experience-step reveal">
-              <div class="step-number">03</div>
-              <div class="step-content">
-                <h4>Installation</h4>
-                <p>Expert installation that protects your natural hair. Seamless, gentle, and perfectly blended.</p>
-              </div>
-            </div>
-            <div class="experience-step reveal">
-              <div class="step-number">04</div>
-              <div class="step-content">
-                <h4>The Reveal</h4>
-                <p>That moment you see yourself — and your hair finally matches the energy you've always carried.</p>
+                <p>We discuss your vision, lifestyle, maintenance preferences and long-term hair goals.</p>
+                <p>Density, elasticity, scalp health, and previous treatments are evaluated to ensure suitability.</p>
+                <p>Only once alignment is confirmed do we proceed.</p>
+                <p>Because healthy results begin with informed decisions.</p>
               </div>
             </div>
           </div>
@@ -570,6 +556,8 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 
