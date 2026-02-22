@@ -2284,10 +2284,6 @@ img {
   }
 
   /* --- General mobile polish --- */
-  .reveal {
-    transform: translateY(24px);
-  }
-
   .container {
     padding: 0 20px;
   }

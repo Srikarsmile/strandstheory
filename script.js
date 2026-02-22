@@ -793,13 +793,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Remove .reveal class visibility handling (GSAP handles it now) ──
-  // Make non-hero reveal elements visible since GSAP scroll triggers control their animations
-  document.querySelectorAll('.reveal').forEach(el => {
-    // Skip hero elements — they are handled by heroEntrance()
-    if (el.closest('.hero')) return;
-    el.style.opacity = '1';
-    el.style.transform = 'none';
-  });
+  // GSAP ScrollTrigger handles all reveal animations — no manual overrides needed
 
 });
